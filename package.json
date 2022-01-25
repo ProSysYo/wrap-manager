@@ -7,20 +7,25 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",    
+    "build": "nest build",
     "start": "nest start server",
     "client": "npm run start --prefix apps/client",
-    "dev": "nest start server --watch",    
+    "dev": "nest start server --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/apps/server/main"    
+    "start:prod": "node dist/apps/server/main"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/typeorm": "^8.0.3",
+    "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "styled-components": "^5.3.3",
+    "typeorm": "^0.2.41"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -29,6 +34,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
+    "@types/styled-components": "^5.1.21",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
