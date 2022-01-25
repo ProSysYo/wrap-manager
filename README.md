@@ -1,5 +1,16 @@
-Приложение для учета пленки.
-Используемые технологии: 
+## О проекте
+Приложение для учета пленки на производстве
+Технологии:
+- React, Redux Toolkit, StuledComponents, antd, axios, TypeScript
+- Nest, TypeOrm, Postgress, TypeScript
+## Установка
 
-1.Клиент: React, Redux Toolkit, TypeScript, StyledComponents
-2.Сервер: Nest, TypeOrm, Postgress, TypeScript
+client
+```sh
+cd apps/client
+npm i
+```
+sever
+```sh
+npm i
+```
