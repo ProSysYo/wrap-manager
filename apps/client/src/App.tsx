@@ -1,5 +1,13 @@
+import React from 'react';
+
+import './App.css';
+
 function App() {
-    return <div>CLEAN PROJECT</div>;
+  return (
+    <div className="App"> 
+        dd
+    </div>
+  );
 }
 
 export default App;
