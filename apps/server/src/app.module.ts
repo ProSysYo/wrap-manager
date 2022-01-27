@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './auth/entities/User.entity';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
+import { Door } from './order/entities/door.entity';
 
 @Module({
 	imports: [
@@ -16,7 +17,7 @@ import { Order } from './order/entities/order.entity';
 			username: "postgres",
 			password: "1234",
 			database: "wrap",
-			entities: [User, Order],
+			entities: [User, Order, Door],
 			synchronize: true,
 		}),
 		AuthModule,

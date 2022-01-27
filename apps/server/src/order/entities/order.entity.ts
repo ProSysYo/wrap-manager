@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { IOrder } from '../../../../common/IOrder';
+import { Door } from './door.entity';
 
 @Entity()
 export class Order implements IOrder {
@@ -21,7 +22,7 @@ export class Order implements IOrder {
     @Column()
 	party: string;
 
-    @Column({ nullable: false })
+    @Column({ type: "date", nullable: false })
 	datePlaneShipment: Date;
     
     @Column()
@@ -199,7 +200,10 @@ export class Order implements IOrder {
 	soundInsulation: string;
 
     @Column()
-	colorFrame: string;    
+	colorFrame: string;
+	
+	@OneToMany(() => Door, door => door.order)
+	doors: Door[];
 
 	@Column()
 	isActive: boolean;
