@@ -37,14 +37,14 @@ export interface IOrder {
     colorWindow: string;
     colorKovkaWindow: string;
     patinaKovkaWindow: string;
-    seal: string;
+    seal: string;//уплотнитель
     ear: string;
     closer: string;//Доводчик
     forceCloser: string;//Усиление под доводчик
     holeBox: string;//Отверстия в коробе
     typeHinge: string;
     trioHinge: string;
-    steelDoorStep: string;    
+    steelDoorStep: string;//порог из нержавейки    
     backSheet: string;
     frame: string;
     twoDoor: string;//Двустворчатая дверь
@@ -53,7 +53,7 @@ export interface IOrder {
     widthTwoDoor: string;
     metalBox: string;
     metalPolotno: string;
-    countDoors: string;
+    countDoors: number;
     thickPolotno: string;
     thermoCable: string;
     passport: string;

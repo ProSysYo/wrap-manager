@@ -5,13 +5,14 @@ import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto } from "./dto/update-order.dto";
 import { Order } from "./entities/order.entity";
 import { Door } from "./entities/door.entity";
-
+import { getMonth, getYear } from "date-fns";
+import { findMonthCharacter } from "../common/find-month-character";
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectRepository(Order)
-        private userRepository: Repository<Order>,
+        private orderRepository: Repository<Order>,
         @InjectRepository(Door)
         private doorRepository: Repository<Door>,
         private connection: Connection
@@ -23,8 +24,10 @@ export class OrderService {
         await queryRunner.startTransaction();
 
         try {
-            //Получить максимальную серию за текущий месяц
-            const character: string = "Л";
+            const month = getMonth(new Date()) + 1;
+            const year = getYear(new Date());
+            
+            const character = findMonthCharacter(year, month);
 
             const result = await this.doorRepository
                 .createQueryBuilder("door")
@@ -38,35 +41,46 @@ export class OrderService {
             if (!lastNumber) {
                 lastNumber = 0;
             }
-                        
+
             //Сохранить заказ
-            const newOrder = await this.userRepository.create({
+            const countDoors = +dto.countDoors.split("/")[1]            
+            const newOrder = await this.orderRepository.create({
                 ...dto,
+                countDoors,
                 isActive: true,
             });
             await queryRunner.manager.save(newOrder);
 
             //в цикле по количеству дверей в заказе, сохранить каждую дверь
             let i: number;
-            for (i = 1; i <= 2; i++) {
+            let firstDoor: string
+            let lastDoor: string
+            for (i = 1; i <= countDoors; i++) {
                 lastNumber++;
                 const strNumber = lastNumber.toString().padStart(4, "0");
-
+                 
                 const serial = character + strNumber;
+
+                if (i === 1) firstDoor = serial
+                if (i === countDoors) lastDoor = serial
+
                 const newDoor = await this.doorRepository.create({
                     serial,
                     characterSerial: character,
                     numberSerial: lastNumber,
+                    ordinalNumber: i + "/" + countDoors,
                     order: newOrder,
                     isActive: true,
                 });
                 await queryRunner.manager.save(newDoor);
-            }
+            }            
 
             await queryRunner.commitTransaction();
+
+            return firstDoor + "-" + lastDoor
         } catch (e) {
             await queryRunner.rollbackTransaction();
-            
+
             console.log("error", e);
             throw new HttpException(
                 {
@@ -81,7 +95,7 @@ export class OrderService {
     }
 
     async findAll() {
-        const orders = await this.userRepository.find();
+        const orders = await this.doorRepository.find({ relations: ["order"] });
         return orders;
     }
 

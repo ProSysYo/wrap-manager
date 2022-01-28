@@ -1,210 +1,210 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { IOrder } from '../../../../common/IOrder';
-import { Door } from './door.entity';
+import { IOrder } from "../../../../common/IOrder";
+import { Door } from "./door.entity";
 
 @Entity()
 export class Order implements IOrder {
     @PrimaryGeneratedColumn()
-	id: number;
+    id: number;
 
-	@Column({ nullable: false })
-	price: string;	
-
-	@Column()
-	codeCustomer: string;
-
-	@Column()
-	numberCustomer: string;
+    @Column({ nullable: false })
+    price: string;
 
     @Column()
-	nameCustomer: string;
+    codeCustomer: string;
 
     @Column()
-	party: string;
+    numberCustomer: string;
+
+    @Column()
+    nameCustomer: string;
+
+    @Column()
+    party: string;
 
     @Column({ type: "date", nullable: false })
-	datePlaneShipment: Date;
-    
-    @Column()
-	manager: string;
+    datePlaneShipment: Date;
 
     @Column()
-	modelPolotno: string;
+    manager: string;
 
     @Column()
-	modelCorob: string;
+    modelPolotno: string;
 
     @Column()
-	height: number;
+    modelCorob: string;
 
     @Column()
-	width: number;
+    height: number;
 
     @Column()
-	hinge: string;
+    width: number;
 
     @Column()
-	baseLock: string;
+    hinge: string;
 
     @Column()
-	padBaseLock: string;
+    baseLock: string;
 
     @Column()
-	handle: string;
+    padBaseLock: string;
 
     @Column()
-	cylinderBaseLock: string;
+    handle: string;
 
     @Column()
-	optionalLock: string;
+    cylinderBaseLock: string;
 
     @Column()
-	padOptionalLock: string;
+    optionalLock: string;
 
     @Column()
-	cylinderOptionalLock: string;
+    padOptionalLock: string;
 
     @Column()
-	bolt: string;
+    cylinderOptionalLock: string;
 
     @Column()
-	eye: string;
+    bolt: string;
 
     @Column()
-	colorDoor: string;
+    eye: string;
 
     @Column()
-	typeDecorationOutside: string;
+    colorDoor: string;
 
     @Column()
-	colorDecorationOutside: string;
+    typeDecorationOutside: string;
 
     @Column()
-	patinaDecorationOutside: string;
+    colorDecorationOutside: string;
 
     @Column()
-	decorationOutside: string;
+    patinaDecorationOutside: string;
 
     @Column()
-	typeDecorationInside: string;
+    decorationOutside: string;
 
     @Column()
-	colorDecorationInside: string;
+    typeDecorationInside: string;
 
     @Column()
-	patinaDecorationInside: string;
+    colorDecorationInside: string;
 
     @Column()
-	decorationInside: string;
+    patinaDecorationInside: string;
 
     @Column()
-	window: string;
+    decorationInside: string;
 
     @Column()
-	heightWindow: string;
+    window: string;
+
+    @Column({ nullable: true })
+    heightWindow: string;
+
+    @Column({ nullable: true })
+    widthWindow: string;
+
+    @Column({ nullable: true })
+    thickWindow: string;
 
     @Column()
-	widthWindow: string;
+    colorWindow: string;
 
     @Column()
-	thickWindow: string;
+    colorKovkaWindow: string;
 
     @Column()
-	colorWindow: string;
+    patinaKovkaWindow: string;
 
     @Column()
-	colorKovkaWindow: string;
+    seal: string;
 
     @Column()
-	patinaKovkaWindow: string;
+    ear: string;
 
     @Column()
-	seal: string;
+    closer: string;
 
     @Column()
-	ear: string;
+    forceCloser: string;
 
     @Column()
-	closer: string;
+    holeBox: string;
 
     @Column()
-	forceCloser: string;
+    typeHinge: string;
 
     @Column()
-	holeBox: string;
+    trioHinge: string;
 
     @Column()
-	typeHinge: string;
+    steelDoorStep: string;
 
     @Column()
-	trioHinge: string;
+    backSheet: string;
 
     @Column()
-	steelDoorStep: string;   
+    frame: string;
 
     @Column()
-	backSheet: string;
+    twoDoor: string;
 
     @Column()
-	frame: string;
+    package: string;
+
+    @Column({ nullable: true })
+    note: string;
 
     @Column()
-	twoDoor: string;
+    widthTwoDoor: string;
 
     @Column()
-	package: string;
+    metalBox: string;
 
     @Column()
-	note: string;
+    metalPolotno: string;
 
     @Column()
-	widthTwoDoor: string;
+    countDoors: number;
 
     @Column()
-	metalBox: string;
+    thickPolotno: string;
 
     @Column()
-	metalPolotno: string;
+    thermoCable: string;
 
     @Column()
-	countDoors: string;
+    passport: string;
 
     @Column()
-	thickPolotno: string;
+    eccentric: string;
 
     @Column()
-	thermoCable: string;
+    electromagnet: string;
 
     @Column()
-	passport: string;
+    illumination: string;
 
     @Column()
-	eccentric: string;
+    leftPolka: string;
 
     @Column()
-	electromagnet: string;
+    rightPolka: string;
 
     @Column()
-	illumination: string;
+    framuga: string;
 
     @Column()
-	leftPolka: string;
+    soundInsulation: string;
 
     @Column()
-	rightPolka: string;
+    colorFrame: string;
+
+    @OneToMany(() => Door, (door) => door.order)
+    doors: Door[];
 
     @Column()
-	framuga: string;
-
-    @Column()
-	soundInsulation: string;
-
-    @Column()
-	colorFrame: string;
-	
-	@OneToMany(() => Door, door => door.order)
-	doors: Door[];
-
-	@Column()
-	isActive: boolean;
+    isActive: boolean;
 }
