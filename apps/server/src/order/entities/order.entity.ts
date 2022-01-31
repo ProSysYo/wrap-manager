@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { IOrder } from "../../../../common/IOrder";
-import { Door } from "./door.entity";
+import { Door } from "../../door/entities/door.entity";
 
 @Entity()
 export class Order implements IOrder {

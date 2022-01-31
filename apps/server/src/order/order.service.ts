@@ -4,19 +4,18 @@ import { Connection, Repository } from "typeorm";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto } from "./dto/update-order.dto";
 import { Order } from "./entities/order.entity";
-import { Door } from "./entities/door.entity";
 import { getMonth, getYear } from "date-fns";
 import { findMonthCharacter } from "../common/find-month-character";
+import { DoorService } from "../door/door.service";
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectRepository(Order)
         private orderRepository: Repository<Order>,
-        @InjectRepository(Door)
-        private doorRepository: Repository<Door>,
+        private doorService: DoorService,
         private connection: Connection
-    ) {}
+    ) { }
 
     async create(dto: CreateOrderDto) {
         const queryRunner = this.connection.createQueryRunner();
@@ -29,13 +28,7 @@ export class OrderService {
 
             const character = findMonthCharacter(year, month);
 
-            const result = await this.doorRepository
-                .createQueryBuilder("door")
-                .select("MAX(door.numberSerial)", "numberSerial")
-                .where("door.characterSerial = :characterSerial", {
-                    characterSerial: character,
-                })
-                .getRawOne();
+            const result = await this.doorService.getMaxSerial(character)
 
             let lastNumber = result.numberSerial;
             if (!lastNumber) {
@@ -65,13 +58,12 @@ export class OrderService {
                 if (i === 1) firstDoor = serial;
                 if (i === countDoors) lastDoor = serial;
 
-                const newDoor = await this.doorRepository.create({
+                const newDoor = await this.doorService.generateNewDoor({
                     serial,
                     characterSerial: character,
                     numberSerial: lastNumber,
                     ordinalNumber: i + "/" + countDoors,
-                    order: newOrder,
-                    isActive: true,
+                    order: newOrder
                 });
                 await queryRunner.manager.save(newDoor);
             }
@@ -96,13 +88,7 @@ export class OrderService {
     }
 
     async findAll() {
-        const orders = await this.doorRepository.find({
-            relations: ["order"],
-            order: {
-                serial: "ASC",                
-            },
-        });
-        return orders;
+        return 'ddd'
     }
 
     findOne(id: number) {

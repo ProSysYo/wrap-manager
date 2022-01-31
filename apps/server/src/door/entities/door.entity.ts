@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Order } from './order.entity';
+import { Order } from '../../order/entities/order.entity';
 
 @Entity()
 export class Door {

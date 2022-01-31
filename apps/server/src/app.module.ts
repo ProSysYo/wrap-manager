@@ -6,7 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './auth/entities/User.entity';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
-import { Door } from './order/entities/door.entity';
+import { Door } from './door/entities/door.entity';
+import { DoorModule } from './door/door.module';
 
 @Module({
 	imports: [
@@ -21,7 +22,8 @@ import { Door } from './order/entities/door.entity';
 			synchronize: true,
 		}),
 		AuthModule,
-		OrderModule,		
+		OrderModule,
+		DoorModule,		
 	],
 })
 export class AppModule {}
