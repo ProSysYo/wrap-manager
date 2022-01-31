@@ -3,9 +3,12 @@ import styled from "styled-components";
 import { useAppDispatch } from "../../app/hooks";
 
 import { login } from "./authSlice";
+
 export const Login = () => {
     const dispatch = useAppDispatch();
     const onFinish = (values: any) => {
+        console.log(values);
+        
         dispatch(login(values))       
     };
     
@@ -25,7 +28,7 @@ export const Login = () => {
                 <Divider>Авторизация</Divider>    
                 <Form.Item
                     label="Логин"
-                    name="login"
+                    name="login"                    
                     rules={[{ required: true, message: 'Введите логин' }]}
                 >
                     <Input />

@@ -15,6 +15,7 @@ export class AuthService {
         const user = await this.repository.findOne({
             where: { login: dto.login },
         });
+        console.log(dto);
 
         if (!user)
             throw new UnauthorizedException({
@@ -24,24 +25,36 @@ export class AuthService {
         if (dto.password !== user.password)
             throw new UnauthorizedException({ message: "Пароль не верный" });
 
-        const token  = this.generateToken(user)
+        const token = this.generateToken(user);
 
-        return {token, user};
+        return { token, user };
     }
-    
+
     async auth(token: string) {
         const id = token.split("_")[0];
-        const name = token.split("_")[1];
+        const login = token.split("_")[1];
         const role = token.split("_")[2];
 
-        if (!id || !name || !role) 
-            throw new UnauthorizedException({ message: "Пользователь не авторизован" });
+        if (!id || !login || !role)
+            throw new UnauthorizedException({
+                message: "Пользователь не авторизован",
+            });
+
+        const user = await this.repository.findOne({
+            where: { login: login },
+        });
+
+        if (!user)
+            throw new UnauthorizedException({
+                message: "Нет такого пользователя",
+            });
         
-        
+        const newToken = this.generateToken(user);
+        return { token: newToken, user };
     }
 
     private generateToken(user: User) {
-        const token: string = user.id + "_" + user.name + "_" + user.role;
-        return token
+        const token: string = user.id + "_" + user.login + "_" + user.role;
+        return token;
     }
 }

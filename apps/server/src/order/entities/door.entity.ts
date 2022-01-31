@@ -41,6 +41,15 @@ export class Door {
 
 	@Column({ type: "date", nullable: true })
 	dateShipment: Date;
+
+	@Column({ type: "date", nullable: true })
+	dateOtdelochnik: Date;
+
+	@Column({ nullable: true })
+	fioOtdelochnik: string;
+
+	@Column({ nullable: true })
+	printLabel: string;
 	
 	@ManyToOne(() => Order, order => order.doors)
 	order: Order;

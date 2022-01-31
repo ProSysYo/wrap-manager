@@ -26,7 +26,7 @@ export class OrderService {
         try {
             const month = getMonth(new Date()) + 1;
             const year = getYear(new Date());
-            
+
             const character = findMonthCharacter(year, month);
 
             const result = await this.doorRepository
@@ -43,26 +43,27 @@ export class OrderService {
             }
 
             //Сохранить заказ
-            const countDoors = +dto.countDoors.split("/")[1]            
+            const countDoors = +dto.countDoors.split("/")[1];
             const newOrder = await this.orderRepository.create({
                 ...dto,
                 countDoors,
+                dateCreate: new Date(),
                 isActive: true,
             });
             await queryRunner.manager.save(newOrder);
 
             //в цикле по количеству дверей в заказе, сохранить каждую дверь
             let i: number;
-            let firstDoor: string
-            let lastDoor: string
+            let firstDoor: string;
+            let lastDoor: string;
             for (i = 1; i <= countDoors; i++) {
                 lastNumber++;
                 const strNumber = lastNumber.toString().padStart(4, "0");
-                 
+
                 const serial = character + strNumber;
 
-                if (i === 1) firstDoor = serial
-                if (i === countDoors) lastDoor = serial
+                if (i === 1) firstDoor = serial;
+                if (i === countDoors) lastDoor = serial;
 
                 const newDoor = await this.doorRepository.create({
                     serial,
@@ -73,11 +74,11 @@ export class OrderService {
                     isActive: true,
                 });
                 await queryRunner.manager.save(newDoor);
-            }            
+            }
 
             await queryRunner.commitTransaction();
 
-            return firstDoor + "-" + lastDoor
+            return firstDoor + "-" + lastDoor;
         } catch (e) {
             await queryRunner.rollbackTransaction();
 
@@ -95,7 +96,12 @@ export class OrderService {
     }
 
     async findAll() {
-        const orders = await this.doorRepository.find({ relations: ["order"] });
+        const orders = await this.doorRepository.find({
+            relations: ["order"],
+            order: {
+                serial: "ASC",                
+            },
+        });
         return orders;
     }
 

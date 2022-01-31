@@ -9,8 +9,9 @@ const defaultOptions = {
 
 export const http = axios.create(defaultOptions);
 http.interceptors.request.use( (config: AxiosRequestConfig) => {
-    const token = localStorage.getItem("token");
-    config.headers = { Authorization: token ? token : "" };
-
+    const token = localStorage.getItem("token");    
+    
+    config.headers = { Authorization: token ? token : "" };   
+    
     return config;
 });

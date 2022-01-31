@@ -157,6 +157,12 @@ export class Order implements IOrder {
     @Column({ nullable: true })
     note: string;
 
+    @Column({ type: "date", nullable: false })
+    dateCreate: Date;
+
+    @Column({ type: "date", nullable: true })
+    dateUpdate: Date;
+
     @Column()
     widthTwoDoor: string;
 
