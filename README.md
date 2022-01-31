@@ -1,5 +1,5 @@
 ## О проекте
-Приложение для учета пленки на производстве
+CRM система
 Технологии:
 - React, Redux Toolkit, StuledComponents, antd, axios, TypeScript
 - Nest, TypeOrm, Postgress, TypeScript
