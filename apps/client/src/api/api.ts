@@ -10,12 +10,17 @@ const authentication = () => {
     return http.get("/auth/auth")
 }
 
-const updateStatusDoor = (data: { serialDoor: string, zone: string }) => {
-    return http.post("/door/updateStatus", data)
+const markDate = (data: { serial: string, field: string }) => {
+    return http.post("/door/markDate", data)
+}
+
+const markDateWarehouse = (data: { serial: string, codeOtdelochnik: string }) => {
+    return http.post("/door/markDateWarehouse", data)
 }
 
 export const api = {    
     login,
     authentication,
-    updateStatusDoor
+    markDate,
+    markDateWarehouse
 }

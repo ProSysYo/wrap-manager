@@ -15,7 +15,7 @@ export class OrderService {
         private orderRepository: Repository<Order>,
         private doorService: DoorService,
         private connection: Connection
-    ) { }
+    ) {}
 
     async create(dto: CreateOrderDto) {
         const queryRunner = this.connection.createQueryRunner();
@@ -28,7 +28,7 @@ export class OrderService {
 
             const character = findMonthCharacter(year, month);
 
-            const result = await this.doorService.getMaxSerial(character)
+            const result = await this.doorService.getMaxSerial(character);
 
             let lastNumber = result.numberSerial;
             if (!lastNumber) {
@@ -63,7 +63,7 @@ export class OrderService {
                     characterSerial: character,
                     numberSerial: lastNumber,
                     ordinalNumber: i + "/" + countDoors,
-                    order: newOrder
+                    order: newOrder,
                 });
                 await queryRunner.manager.save(newDoor);
             }
@@ -88,15 +88,36 @@ export class OrderService {
     }
 
     async findAll() {
-        return 'ddd'
+        const orders = await this.orderRepository.find({
+            relations: ["doors"]            
+        });
+        return orders;
     }
 
     findOne(id: number) {
         return `This action returns a #${id} order`;
     }
 
-    update(id: number, updateOrderDto: UpdateOrderDto) {
-        return `This action updates a #${id} order`;
+    async update(id: number, dto: UpdateOrderDto) {        
+        const order = await this.orderRepository.findOne(id);
+
+        if (!order) {
+            throw new HttpException(`Заказ не найден`, HttpStatus.NOT_FOUND);
+        }
+
+        const countDoors = +dto.countDoors.split("/")[1];
+
+        if (countDoors !== order.countDoors) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.CONFLICT,
+                    error: "Нельзя изменять количество дверей в заказе",
+                },
+                HttpStatus.CONFLICT
+            );
+        }
+        await this.orderRepository.update(id, { ...dto, countDoors, dateUpdate: new Date() });
+        return await this.orderRepository.findOne(id);
     }
 
     remove(id: number) {

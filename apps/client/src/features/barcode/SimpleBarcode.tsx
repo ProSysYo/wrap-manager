@@ -1,20 +1,23 @@
 import { Input, List } from "antd";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { barcodeActions } from './barcodeSlice';
+import { openNotification } from "../../common/notification";
+import { barcodeActions, markDate } from './barcodeSlice';
 
-const data: string[] = [];
 
 export const SimpleBarcode = () => {
     const dispatch = useAppDispatch();
     const barcode = useAppSelector((state) => state.barcode);
 
-    const aaa = (e: any) => {
-        console.log(e);
-        
-        dispatch(barcodeActions.setSimpleCode(e.target.value))
+    const pressEnter = async () => {
+        if (!barcode.field || !barcode.simpleCode) {
+            openNotification("error", "Не хватает данных")
+            return
+        }
 
+        dispatch(markDate({serial: barcode.simpleCode, field: barcode.field}))        
     }
+
     return (
         <>
             <MyInput
@@ -22,14 +25,16 @@ export const SimpleBarcode = () => {
                 size="large"
                 autoFocus
                 value={barcode.simpleCode}
-                onPressEnter={aaa}
+                onChange={(e) => dispatch(barcodeActions.setSimpleCode(e.target.value))}
+                onPressEnter={pressEnter}
             />
 
             <span>Обработанные штрихкоды:</span>
             <List
                 size="small"
                 bordered
-                dataSource={data}
+                pagination={{pageSize: 10}}
+                dataSource={barcode.readedCodes}
                 renderItem={(item) => <List.Item>{item}</List.Item>}
             />
         </>

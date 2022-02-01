@@ -20,7 +20,7 @@ export const MySider = () => {
                         <Link to="/barcode">Штриховка</Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={<VideoCameraOutlined />}>
-                        <Link to="/shipmentBarcode">Отгрузка</Link>
+                        <Link to="/doors">Двери</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>

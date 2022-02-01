@@ -1,18 +1,19 @@
 import { Select } from "antd";
 
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { barcodeActions } from './barcodeSlice';
-import { SimpleBarcode } from './SimpleBarcode';
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { barcodeActions } from "./barcodeSlice";
+import { SimpleBarcode } from "./SimpleBarcode";
+import { WarehouseBarcode } from "./WarehouseBarcode";
 
 const zones = [
-    { value: "giveMetall", name: "Отдано металл" },
-    { value: "givePanel", name: "Отдано панель" },
-    { value: "madeDirty", name: "Грязный стенд" },
-    { value: "madePaint", name: "Покраска" },
-    { value: "packaging", name: "Упаковка" },
-    { value: "shipment", name: "Отгрузка" },
-    { value: "warehouse", name: "Выдача наряда склад" },
+    { field: "dateGiveMetall", name: "Отдано металл" },
+    { field: "dateGivePanel", name: "Отдано панель" },
+    { field: "dateMadeDirty", name: "Грязный стенд" },
+    { field: "dateMadePaint", name: "Покраска" },
+    { field: "datePackaging", name: "Упаковка" },
+    { field: "dateShipment", name: "Отгрузка" },
+    { field: "dateOtdelochnik", name: "Выдача наряда склад" },
 ];
 
 export const Barcode = () => {
@@ -22,31 +23,33 @@ export const Barcode = () => {
     return (
         <Container>
             <FirstColumn>
-                <h1>Сначала выберите участок штриховки</h1>
+                <h1>Выберите участок штриховки</h1>
 
                 <MySelect
                     placeholder="Выберите участок"
                     size="large"
-                    value={barcode.zone}
+                    value={barcode.field}
                     onSelect={(value: any) => dispatch(barcodeActions.setZone(value))}
                 >
-                    <Select.Option value="" disabled={true}>Выберите участок</Select.Option>
+                    <Select.Option value="" disabled={true}>
+                        Выберите участок
+                    </Select.Option>
                     {zones.map((item, index) => (
-                        <Select.Option key={index} value={item.value}>
+                        <Select.Option key={index} value={item.field}>
                             {item.name}
                         </Select.Option>
                     ))}
                 </MySelect>
             </FirstColumn>
             <SecondColumn>
-                {!barcode.zone &&  <></> }
-                {barcode.zone === "giveMetall" && <SimpleBarcode/>}
-                {barcode.zone === "givePanel" &&  <SimpleBarcode/>}
-                {barcode.zone === "madeDirty" &&  <SimpleBarcode/>}
-                {barcode.zone === "madePaint" &&  <SimpleBarcode/>}
-                {barcode.zone === "packaging" &&  <SimpleBarcode/>}
-                {barcode.zone === "shipment" && <p>Двери + панели</p>}
-                {barcode.zone === "warehouse" && <p>Дверь + отделочник</p>}
+                {!barcode.field && <></>}
+                {barcode.field === "dateGiveMetall" && <SimpleBarcode />}
+                {barcode.field === "dateGivePanel" && <SimpleBarcode />}
+                {barcode.field === "dateMadeDirty" && <SimpleBarcode />}
+                {barcode.field === "dateMadePaint" && <SimpleBarcode />}
+                {barcode.field === "datePackaging" && <SimpleBarcode />}
+                {barcode.field === "dateShipment" && <p>Двери + панели</p>}
+                {barcode.field === "dateOtdelochnik" && <WarehouseBarcode />}
             </SecondColumn>
         </Container>
     );

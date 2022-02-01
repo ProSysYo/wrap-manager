@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Home } from './features/home/Home';
 import { Barcode } from './features/barcode/Barcode';
+import { Doors } from './features/door/Doors';
 
 
 
@@ -39,6 +40,7 @@ const App = () => {
                             <Routes>
                                 <Route path="/" element={<Home/>} />                              
                                 <Route path="/barcode" element={<Barcode/>} />
+                                <Route path="/doors" element={<Doors/>} />
                             </Routes>
                         </StyledContent>
                         <StyledFooter>©2022 Created by ProSys</StyledFooter>

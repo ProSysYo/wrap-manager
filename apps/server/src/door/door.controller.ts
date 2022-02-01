@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DoorService } from './door.service';
 import { CreateDoorDto } from './dto/create-door.dto';
+import { MarkDateDto } from './dto/mark-date.dto';
+import { MarkDateWatehouseDto } from './dto/mark-date-warehouse.dto';
 
 @Controller('door')
 export class DoorController {
@@ -26,10 +28,15 @@ export class DoorController {
     return this.doorService.update(+id, updateDoorDto);
   }
 
-  @Patch("markDateGiveMetall/:serial")
-  markDateGiveMetall(@Param('serial') serial: string) {
-    return this.doorService.markDateGiveMetall(serial);
+  @Post("markDate")
+  markDate(@Body() markDateDto: MarkDateDto) {
+    return this.doorService.markDate(markDateDto);
   }
+
+  @Post("markDateWarehouse")
+  markDateWarehouse(@Body() markDateWarehouseDto: MarkDateWatehouseDto) {
+    return this.doorService.markDateWarehouse(markDateWarehouseDto);
+  } 
 
   @Delete(':id')
   remove(@Param('id') id: string) {
