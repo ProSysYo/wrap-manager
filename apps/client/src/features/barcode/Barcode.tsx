@@ -3,6 +3,7 @@ import { Select } from "antd";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { barcodeActions } from "./barcodeSlice";
+import { ShipmentBarcode } from "./ShipmentBarcode";
 import { SimpleBarcode } from "./SimpleBarcode";
 import { WarehouseBarcode } from "./WarehouseBarcode";
 
@@ -14,6 +15,8 @@ const zones = [
     { field: "datePackaging", name: "Упаковка" },
     { field: "dateShipment", name: "Отгрузка" },
     { field: "dateOtdelochnik", name: "Выдача наряда склад" },
+    { field: "чч", name: "Отдано сторонние панели" },
+    { field: "чч", name: "Упаковка сторонних панелей" },
 ];
 
 export const Barcode = () => {
@@ -48,7 +51,7 @@ export const Barcode = () => {
                 {barcode.field === "dateMadeDirty" && <SimpleBarcode />}
                 {barcode.field === "dateMadePaint" && <SimpleBarcode />}
                 {barcode.field === "datePackaging" && <SimpleBarcode />}
-                {barcode.field === "dateShipment" && <p>Двери + панели</p>}
+                {barcode.field === "dateShipment" && <ShipmentBarcode/>}
                 {barcode.field === "dateOtdelochnik" && <WarehouseBarcode />}
             </SecondColumn>
         </Container>

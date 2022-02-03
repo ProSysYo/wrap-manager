@@ -62,8 +62,23 @@ export class Panelout {
     @Column({ type: "date" })
     dateCreate: Date;
 
+    @Column({ type: "date", nullable: true })
+    dateGive: Date;
+
+    @Column({ type: "date", nullable: true })
+    dateCompleted: Date;
+
+    @Column({ type: "date", nullable: true })
+    dateShipment: Date;
+
+    @Column({nullable: true})
+    numberLabel: string;
+
     @Column()
     description: string;
+
+    @Column()
+    printOrder: boolean;
 
     @Column()
     isActive: boolean;

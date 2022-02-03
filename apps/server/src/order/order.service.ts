@@ -92,11 +92,7 @@ export class OrderService {
             relations: ["doors"]            
         });
         return orders;
-    }
-
-    findOne(id: number) {
-        return `This action returns a #${id} order`;
-    }
+    }  
 
     async update(id: number, dto: UpdateOrderDto) {        
         const order = await this.orderRepository.findOne(id);
@@ -118,9 +114,5 @@ export class OrderService {
         }
         await this.orderRepository.update(id, { ...dto, countDoors, dateUpdate: new Date() });
         return await this.orderRepository.findOne(id);
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} order`;
-    }
+    }    
 }

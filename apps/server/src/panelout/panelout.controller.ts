@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Param, Patch } from '@nestjs/common';
 import { PaneloutService } from './panelout.service';
 import { CreatePaneloutDto } from './dto/create-panelout.dto';
 
@@ -10,20 +10,9 @@ export class PaneloutController {
   create(@Body() createPaneloutDto: CreatePaneloutDto) {
     return this.paneloutService.create(createPaneloutDto);
   }
-
-  @Get()
-  findAll() {
-    return this.paneloutService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paneloutService.findOne(+id);
-  }
   
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.paneloutService.remove(+id);
+  @Patch("markDateShipment/:numberOrder")
+  markDateShipment(@Param("numberOrder") numberOrder: string) {
+    return this.paneloutService.markDateShipment(numberOrder);
   }
 }
