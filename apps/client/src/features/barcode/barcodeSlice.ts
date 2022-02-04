@@ -7,6 +7,7 @@ export interface BarcodeState {
     simpleCode: string;
     readedCodes: string[];
     codeOtdelochnik: string;
+    packagePanel: { numberLabel: number | null; panels: any[] };
 }
 
 const initialState: BarcodeState = {
@@ -15,6 +16,10 @@ const initialState: BarcodeState = {
     simpleCode: "",
     readedCodes: [],
     codeOtdelochnik: "",
+    packagePanel: {
+        numberLabel: null,
+        panels: []
+    },
 };
 
 export const markDate = createAsyncThunk(
@@ -59,6 +64,24 @@ export const markDateWarehouse = createAsyncThunk(
     }
 );
 
+export const packagePanels = createAsyncThunk("barcode/packagePanels", async (data: string[], { rejectWithValue }) => {
+    try {
+        const response = await api.packagePanels(data);
+        openNotification("success", "Номера обработаны");
+
+        return {
+            data: response.data,
+        };
+    } catch (error: any) {
+        if (!error.isAxiosError) {
+            throw error;
+        }
+
+        openNotification("error", error.response.data.message);
+        return rejectWithValue(error.response.data);
+    }
+});
+
 export const barcodeSlice = createSlice({
     name: "barcode",
     initialState,
@@ -75,17 +98,21 @@ export const barcodeSlice = createSlice({
     },
     extraReducers: (bilder) => {
         bilder
-        .addCase(markDate.fulfilled, (state, action) => {
-            state.readedCodes.push(state.simpleCode);
-            state.simpleCode = "";
-            state.status = "idle"; 
-        })
-        .addCase(markDateWarehouse.fulfilled, (state, action) => {
-            state.readedCodes.push(state.simpleCode);
-            state.simpleCode = "";
-            state.codeOtdelochnik= "";
-            state.status = "idle"; 
-        })
+            .addCase(markDate.fulfilled, (state) => {
+                state.readedCodes.push(state.simpleCode);
+                state.simpleCode = "";
+                state.status = "idle";
+            })
+            .addCase(markDateWarehouse.fulfilled, (state) => {
+                state.readedCodes.push(state.simpleCode);
+                state.simpleCode = "";
+                state.codeOtdelochnik = "";
+                state.status = "idle";
+            })
+            .addCase(packagePanels.fulfilled, (state, action) => {
+                state.packagePanel.numberLabel = action.payload.data.numberLabel;
+                state.packagePanel.panels = action.payload.data.panels;
+            });
     },
 });
 

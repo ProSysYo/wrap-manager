@@ -15,4 +15,9 @@ export class PaneloutController {
   markDateShipment(@Param("numberOrder") numberOrder: string) {
     return this.paneloutService.markDateShipment(numberOrder);
   }
+
+  @Post('packagePanels')
+  packagePanels(@Body() numbers: string[]) {
+    return this.paneloutService.packagePanels(numbers);
+  }
 }

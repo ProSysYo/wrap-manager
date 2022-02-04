@@ -6,6 +6,7 @@ import { barcodeActions } from "./barcodeSlice";
 import { ShipmentBarcode } from "./ShipmentBarcode";
 import { SimpleBarcode } from "./SimpleBarcode";
 import { WarehouseBarcode } from "./WarehouseBarcode";
+import { PackagePanelBarcode } from './PackagePanelBarcode';
 
 const zones = [
     { field: "dateGiveMetall", name: "Отдано металл" },
@@ -16,7 +17,7 @@ const zones = [
     { field: "dateShipment", name: "Отгрузка" },
     { field: "dateOtdelochnik", name: "Выдача наряда склад" },
     { field: "чч", name: "Отдано сторонние панели" },
-    { field: "чч", name: "Упаковка сторонних панелей" },
+    { field: "datePackagingPanel", name: "Упаковка сторонних панелей" },
 ];
 
 export const Barcode = () => {
@@ -31,6 +32,7 @@ export const Barcode = () => {
                 <MySelect
                     placeholder="Выберите участок"
                     size="large"
+                    listHeight={500}
                     value={barcode.field}
                     onSelect={(value: any) => dispatch(barcodeActions.setZone(value))}
                 >
@@ -53,6 +55,7 @@ export const Barcode = () => {
                 {barcode.field === "datePackaging" && <SimpleBarcode />}
                 {barcode.field === "dateShipment" && <ShipmentBarcode/>}
                 {barcode.field === "dateOtdelochnik" && <WarehouseBarcode />}
+                {barcode.field === "datePackagingPanel" && <PackagePanelBarcode />}
             </SecondColumn>
         </Container>
     );

@@ -53,7 +53,7 @@ export class PaneloutService {
             throw new HttpException(
                 {
                     status: HttpStatus.FORBIDDEN,
-                    error: "Произошло не предвиденное исключение",
+                    message: "Произошло не предвиденное исключение",
                 },
                 HttpStatus.FORBIDDEN
             );
@@ -72,14 +72,14 @@ export class PaneloutService {
     /**
      * Эндпоинт для отметки даты отгрузки панелей. PS ради автономности, часть записей занесется, а часть нет
      * @returns сообщение об успехе или ошибку с номером панели
-     * @param numberOrder -строка с номерами панелей, н-р: 8552-1#8552-6  
+     * @param numberOrder -строка с номерами панелей, н-р: 8552-1#8552-6
      */
-    async markDateShipment(numberOrders: string) {
-        const numbers = numberOrders.match(/\d+-\d+/g);        
+    async markDateShipment(numberOrders: string) {       
+        const numbers = numberOrders.match(/\d+-\d+/g);
 
         if (!numbers) {
             throw new HttpException(
-                { status: HttpStatus.NOT_FOUND, error: "Не корректный номер панелей: " + numberOrders },
+                { status: HttpStatus.NOT_FOUND, message: "Не корректный номер панелей: " + numberOrders },
                 HttpStatus.NOT_FOUND
             );
         }
@@ -91,8 +91,7 @@ export class PaneloutService {
                 await this.paneloutRepository.update(panel.id, {
                     dateShipment: new Date(),
                 });
-                
-            }            
+            }
 
             return { status: HttpStatus.OK, message: "Дата добавлена" };
         } catch (e) {
@@ -100,10 +99,45 @@ export class PaneloutService {
             if (e instanceof HttpException) throw e;
 
             throw new HttpException(
-                { status: HttpStatus.FORBIDDEN, error: "Произошло не предвиденное исключение" },
+                { status: HttpStatus.FORBIDDEN, message: "Произошло не предвиденное исключение" },
                 HttpStatus.FORBIDDEN
             );
-        } 
+        }
+    }
+
+    /**
+     * @param numbers -массив с номерами панелей, ["111-1", 1112-12]
+     * @returns object { numberLabel: 123, panels: [{number: 111-1, numberCustomer: "сч.1233, wrap: "венге кантри"}]}
+     */
+    async packagePanels(numbers: string[]) {
+        console.log(numbers);
+        if (numbers.length === 0) {
+            throw new HttpException(
+                { status: HttpStatus.FORBIDDEN, message: "Нет номеров панелей" },
+                HttpStatus.FORBIDDEN
+            );
+        }
+
+        for(const number of numbers) {
+            const test = number.match(/\d+-\d+/)
+            if (!test) {
+                throw new HttpException(
+                    { status: HttpStatus.FORBIDDEN, message: "Не валидный номер " + number },
+                    HttpStatus.FORBIDDEN
+                );
+            }
+        }
+
+        try {
+        } catch (e) {
+            console.log("error", e);
+            if (e instanceof HttpException) throw e;
+
+            throw new HttpException(
+                { status: HttpStatus.FORBIDDEN, message: "Произошло не предвиденное исключение" },
+                HttpStatus.FORBIDDEN
+            );
+        }
     }
 
     /**
@@ -120,7 +154,7 @@ export class PaneloutService {
         if (order) return order;
 
         throw new HttpException(
-            { status: HttpStatus.NOT_FOUND, error: "Панель с таким номером не найдена: " + numberOrder },
+            { status: HttpStatus.NOT_FOUND, message: "Панель с таким номером не найдена: " + numberOrder },
             HttpStatus.NOT_FOUND
         );
     }

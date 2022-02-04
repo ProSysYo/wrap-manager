@@ -10,7 +10,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-    isAuth: false,
+    isAuth: true,
     user: null,
     status: "idle",
 };

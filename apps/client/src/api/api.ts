@@ -18,9 +18,14 @@ const markDateWarehouse = (data: { serial: string, codeOtdelochnik: string }) =>
     return http.post("/door/markDateWarehouse", data)
 }
 
+const packagePanels = (data: string[]) => {
+    return http.post("/panelout/packagePanels", data)
+}
+
 export const api = {    
     login,
     authentication,
     markDate,
-    markDateWarehouse
+    markDateWarehouse,
+    packagePanels
 }
