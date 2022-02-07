@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { IsNull, Repository } from "typeorm";
 import { CreateDoorDto } from "./dto/create-door.dto";
 import { Door } from "./entities/door.entity";
 import { MarkDateDto } from "./dto/mark-date.dto";
@@ -36,6 +36,23 @@ export class DoorService {
 
     private async findDoorBySerial(serial: string) {
         return await this.doorRepository.findOne({ where: { serial: serial } });
+    }
+
+    async getSingleDoorsForPrintLabel() {
+        // const doors = await this.doorRepository.find({
+        //     relations: ["order"],
+        //     order: { serial: "ASC" },
+        //     where: { printLabel: null, order: { party: "Заказная"} }
+        // });
+
+        const doors = await this.doorRepository
+            .createQueryBuilder("door")            
+            .leftJoinAndSelect("door.order", "order")            
+            .where("door.printLabel IS NULL")
+            .andWhere('order.party = :party', {party: "Заказная"})
+            .orderBy('serial', 'ASC')
+            .getMany();
+        return doors;
     }
 
     //Штриховка

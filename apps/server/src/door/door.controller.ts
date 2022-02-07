@@ -20,5 +20,10 @@ export class DoorController {
   @Post("markDateWarehouse")
   markDateWarehouse(@Body() markDateWarehouseDto: MarkDateWatehouseDto) {
     return this.doorService.markDateWarehouse(markDateWarehouseDto);
-  }   
+  }
+  
+  @Get("getSingleDoorsForPrintLabel")
+  getSingleDoorsForPrintLabel() {
+    return this.doorService.getSingleDoorsForPrintLabel();
+  }
 }
