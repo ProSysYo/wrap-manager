@@ -92,7 +92,6 @@ export class DoorService {
             return true;
         } catch (e) {
             console.log("error", e);
-
             if (e instanceof HttpException) throw e;
 
             throw new HttpException(
@@ -101,4 +100,23 @@ export class DoorService {
             );
         }
     }
+
+    async markPrintLabel(serial: string) {
+        try { 
+            const door = await this.findDoorBySerial(serial);
+            if (!door) throw new HttpException(`Дверь с таким номером не существует!`, HttpStatus.NOT_FOUND);            
+            
+            await this.doorRepository.update(door.id, { printLabel: "++" });
+
+            return true
+        } catch (e) {
+            console.log("error", e);
+            if (e instanceof HttpException) throw e;
+
+            throw new HttpException(
+                { status: HttpStatus.FORBIDDEN, error: "Произошло не предвиденное исключение" },
+                HttpStatus.FORBIDDEN
+            );
+        }
+    } 
 }

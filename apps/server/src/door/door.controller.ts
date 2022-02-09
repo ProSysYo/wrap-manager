@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { DoorService } from './door.service';
 import { MarkDateDto } from './dto/mark-date.dto';
 import { MarkDateWatehouseDto } from './dto/mark-date-warehouse.dto';
@@ -20,6 +20,11 @@ export class DoorController {
   @Post("markDateWarehouse")
   markDateWarehouse(@Body() markDateWarehouseDto: MarkDateWatehouseDto) {
     return this.doorService.markDateWarehouse(markDateWarehouseDto);
+  }
+
+  @Patch("markPrintLabel/:serial")
+  markPrintLabel(@Param("serial") serial: string) { 
+    return this.doorService.markPrintLabel(serial);
   }
   
   @Get("getSingleDoorsForPrintLabel")
