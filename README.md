@@ -1,7 +1,7 @@
 ## О проекте
 CRM система
 Технологии:
-- React, Redux Toolkit, StuledComponents, antd, axios, TypeScript
+- React, Redux Toolkit, StyledComponents, antd, axios, TypeScript
 - Nest, TypeOrm, Postgress, TypeScript
 ## Установка
 

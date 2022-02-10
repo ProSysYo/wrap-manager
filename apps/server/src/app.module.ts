@@ -10,6 +10,8 @@ import { Door } from './door/entities/door.entity';
 import { DoorModule } from './door/door.module';
 import { PaneloutModule } from './panelout/panelout.module';
 import { Panelout } from './panelout/entities/panelout.entity';
+import { ExtraModule } from './extra/extra.module';
+import { Extra } from './extra/entities/extra.entity';
 
 @Module({
 	imports: [
@@ -20,13 +22,14 @@ import { Panelout } from './panelout/entities/panelout.entity';
 			username: "postgres",
 			password: "1234",
 			database: "wrap",
-			entities: [User, Order, Door, Panelout],
+			entities: [User, Order, Door, Panelout, Extra],
 			synchronize: true,
 		}),
 		AuthModule,
 		OrderModule,
 		DoorModule,
-		PaneloutModule,		
+		PaneloutModule,
+		ExtraModule,		
 	],
 })
 export class AppModule {}
