@@ -10,94 +10,94 @@ export class Order implements IOrder {
     @Column({ nullable: false })
     price: string;
 
-    @Column()
+    @Column({ nullable: false })
     codeCustomer: string;
 
-    @Column()
+    @Column({ nullable: false })
     numberCustomer: string;
 
-    @Column()
+    @Column({ nullable: false })
     nameCustomer: string;
 
-    @Column()
+    @Column({ nullable: false })
     party: string;
 
     @Column({ type: "date", nullable: false })
     datePlaneShipment: Date;
 
-    @Column()
+    @Column({ nullable: false })
     manager: string;
 
-    @Column()
+    @Column({ nullable: false })
     modelPolotno: string;
 
-    @Column()
+    @Column({ nullable: false })
     modelCorob: string;
 
-    @Column()
+    @Column({ nullable: false })
     height: number;
 
-    @Column()
+    @Column({ nullable: false })
     width: number;
 
-    @Column()
+    @Column({ nullable: false })
     hinge: string;
 
-    @Column()
+    @Column({ nullable: false })
     baseLock: string;
 
-    @Column()
+    @Column({ nullable: false })
     padBaseLock: string;
 
-    @Column()
+    @Column({ nullable: false })
     handle: string;
 
     @Column()
     cylinderBaseLock: string;
 
-    @Column()
+    @Column({ nullable: false })
     optionalLock: string;
 
-    @Column()
+    @Column({ nullable: false })
     padOptionalLock: string;
 
-    @Column()
+    @Column({ nullable: false })
     cylinderOptionalLock: string;
 
-    @Column()
+    @Column({ nullable: false })
     bolt: string;
 
-    @Column()
+    @Column({ nullable: false })
     eye: string;
 
-    @Column()
+    @Column({ nullable: false })
     colorDoor: string;
 
-    @Column()
+    @Column({ nullable: false })
     typeDecorationOutside: string;
 
-    @Column()
+    @Column({ nullable: false })
     colorDecorationOutside: string;
 
-    @Column()
+    @Column({ nullable: false })
     patinaDecorationOutside: string;
 
-    @Column()
+    @Column({ nullable: false })
     decorationOutside: string;
 
-    @Column()
+    @Column({ nullable: false })
     typeDecorationInside: string;
 
-    @Column()
+    @Column({ nullable: false })
     colorDecorationInside: string;
 
-    @Column()
+    @Column({ nullable: false })
     patinaDecorationInside: string;
 
-    @Column()
+    @Column({ nullable: false })
     decorationInside: string;
 
-    @Column()
+    @Column({ nullable: false })
     window: string;
 
     @Column({ nullable: true })
@@ -109,49 +109,49 @@ export class Order implements IOrder {
     @Column({ nullable: true })
     thickWindow: string;
 
-    @Column()
+    @Column({ nullable: false })
     colorWindow: string;
 
-    @Column()
+    @Column({ nullable: false })
     colorKovkaWindow: string;
 
-    @Column()
+    @Column({ nullable: false })
     patinaKovkaWindow: string;
 
-    @Column()
+    @Column({ nullable: false })
     seal: string;
 
-    @Column()
+    @Column({ nullable: false })
     ear: string;
 
-    @Column()
+    @Column({ nullable: false })
     closer: string;
 
-    @Column()
+    @Column({ nullable: false })
     forceCloser: string;
 
-    @Column()
+    @Column({ nullable: false })
     holeBox: string;
 
-    @Column()
+    @Column({ nullable: false })
     typeHinge: string;
 
-    @Column()
+    @Column({ nullable: false })
     trioHinge: string;
 
-    @Column()
+    @Column({ nullable: false })
     steelDoorStep: string;
 
-    @Column()
+    @Column({ nullable: false })
     backSheet: string;
 
-    @Column()
+    @Column({ nullable: false })
     frame: string;
 
-    @Column()
+    @Column({ nullable: false })
     twoDoor: string;
 
-    @Column()
+    @Column({ nullable: false })
     package: string;
 
     @Column({ nullable: true })
@@ -163,54 +163,54 @@ export class Order implements IOrder {
     @Column({ type: "date", nullable: true })
     dateUpdate: Date;
 
-    @Column()
+    @Column({ nullable: false })
     widthTwoDoor: string;
 
-    @Column()
+    @Column({ nullable: false })
     metalBox: string;
 
-    @Column()
+    @Column({ nullable: false })
     metalPolotno: string;
 
-    @Column()
+    @Column({ nullable: false })
     countDoors: number;
 
-    @Column()
+    @Column({ nullable: false })
     thickPolotno: string;
 
-    @Column()
+    @Column({ nullable: false })
     thermoCable: string;
 
-    @Column()
+    @Column({ nullable: false })
     passport: string;
 
-    @Column()
+    @Column({ nullable: false })
     eccentric: string;
 
-    @Column()
+    @Column({ nullable: false })
     electromagnet: string;
 
-    @Column()
+    @Column({ nullable: false })
     illumination: string;
 
-    @Column()
+    @Column({ nullable: false })
     leftPolka: string;
 
-    @Column()
+    @Column({ nullable: false })
     rightPolka: string;
 
-    @Column()
+    @Column({ nullable: false })
     framuga: string;
 
-    @Column()
+    @Column({ nullable: false })
     soundInsulation: string;
 
-    @Column()
+    @Column({ nullable: false })
     colorFrame: string;
 
     @OneToMany(() => Door, (door) => door.order)
     doors: Door[];
 
-    @Column()
+    @Column({ nullable: false, default: true })
     isActive: boolean;
 }

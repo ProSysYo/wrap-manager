@@ -7,6 +7,7 @@ import { Order } from "./entities/order.entity";
 import { getMonth, getYear } from "date-fns";
 import { findMonthCharacter } from "../common/find-month-character";
 import { DoorService } from "../door/door.service";
+import { CreateOrderSyncingDto } from "./dto/create-order-syncing";
 
 @Injectable()
 export class OrderService {
@@ -87,14 +88,62 @@ export class OrderService {
         }
     }
 
+    async createSyncing(dto: CreateOrderSyncingDto) {
+        const queryRunner = this.connection.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        console.log(dto);
+        
+
+        try {
+            const newOrder = await this.orderRepository.create({
+                ...dto,                
+                countDoors: 1,
+                dateCreate: new Date(),
+                isActive: true,
+            });
+
+            await queryRunner.manager.save(newOrder);
+
+            const character = dto.serial.substring(0, 1)
+            const numberSerial = dto.serial.substring(1, 4)
+            const newDoor = await this.doorService.generateNewDoor({
+                serial: dto.serial,
+                characterSerial: character,
+                numberSerial: +numberSerial,
+                ordinalNumber: 1 + "/" + 1,                
+                order: newOrder,
+            });
+
+            await queryRunner.manager.save(newDoor);
+
+            await queryRunner.commitTransaction();
+
+            return true;
+        } catch (e) {
+            await queryRunner.rollbackTransaction();
+
+            console.log("error", e);
+            throw new HttpException(
+                {
+                    status: HttpStatus.FORBIDDEN,
+                    error: "Произошло не предвиденное исключение",
+                },
+                HttpStatus.FORBIDDEN
+            );
+        } finally {
+            await queryRunner.release();
+        }
+    }
+
     async findAll() {
         const orders = await this.orderRepository.find({
-            relations: ["doors"]            
+            relations: ["doors"],
         });
         return orders;
-    }  
+    }
 
-    async update(id: number, dto: UpdateOrderDto) {        
+    async update(id: number, dto: UpdateOrderDto) {
         const order = await this.orderRepository.findOne(id);
 
         if (!order) {
@@ -114,5 +163,5 @@ export class OrderService {
         }
         await this.orderRepository.update(id, { ...dto, countDoors, dateUpdate: new Date() });
         return await this.orderRepository.findOne(id);
-    }    
+    }
 }

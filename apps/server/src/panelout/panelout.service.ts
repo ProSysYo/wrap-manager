@@ -11,6 +11,14 @@ export class PaneloutService {
         private paneloutRepository: Repository<Panelout>,
         private connection: Connection
     ) {}
+
+    /**
+     * Сервис для создания заявки на сторонние панели
+     * @returns присвоенные номера заявок или сгенерирует ошибку
+     * @param count количество комплектов
+     * @param countSelected количество разновидностей панелей в заявке
+     * @param panels массив панелей с описанием
+     */
     async create(dto: CreatePaneloutDto) {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
@@ -61,7 +69,12 @@ export class PaneloutService {
             await queryRunner.release();
         }
     }
-
+    /**
+     * Для получения макимального номера панели
+     * @returns промис
+     * @example const result = await this.getMaxNumber();
+                let maxNumber: number = result.number;
+     */
     async getMaxNumber() {
         return await this.paneloutRepository
             .createQueryBuilder("panelout")
@@ -70,7 +83,7 @@ export class PaneloutService {
     }
 
     /**
-     * Эндпоинт для отметки даты отгрузки панелей. PS ради автономности, часть записей занесется, а часть нет
+     * для отметки даты отгрузки панелей. PS ради автономности, часть записей занесется, а часть нет
      * @returns сообщение об успехе или ошибку с номером панели
      * @param numberOrder -строка с номерами панелей, н-р: 8552-1#8552-6
      */

@@ -39,12 +39,6 @@ export class DoorService {
     }
 
     async getSingleDoorsForPrintLabel() {
-        // const doors = await this.doorRepository.find({
-        //     relations: ["order"],
-        //     order: { serial: "ASC" },
-        //     where: { printLabel: null, order: { party: "Заказная"} }
-        // });
-
         const doors = await this.doorRepository
             .createQueryBuilder("door")            
             .leftJoinAndSelect("door.order", "order")            
