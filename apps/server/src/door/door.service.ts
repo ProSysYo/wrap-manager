@@ -6,6 +6,7 @@ import { Door } from "./entities/door.entity";
 import { MarkDateDto } from "./dto/mark-date.dto";
 import { MarkDateWatehouseDto } from "./dto/mark-date-warehouse.dto";
 import { normalizeSerial } from "apps/util/normalizeSerial";
+import { WithDatesDto } from "./dto/withDatesDto";
 
 @Injectable()
 export class DoorService {
@@ -112,5 +113,17 @@ export class DoorService {
                 HttpStatus.FORBIDDEN
             );
         }
-    } 
+    }
+
+    //Сервис для обновления дат старых заказов
+    async updateDatesSyncing( dto: WithDatesDto) {
+        const door = await this.findDoorBySerial(dto.serial);
+        console.log(dto);
+        
+
+        if (!door) throw new HttpException(`Дверь с таким номером не существует!`, HttpStatus.NOT_FOUND);
+        
+        await this.doorRepository.update(door.id, { ...dto, printLabel: "++" });
+        return true;
+    }
 }

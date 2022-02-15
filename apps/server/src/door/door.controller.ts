@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { DoorService } from './door.service';
 import { MarkDateDto } from './dto/mark-date.dto';
 import { MarkDateWatehouseDto } from './dto/mark-date-warehouse.dto';
+import { WithDatesDto } from './dto/withDatesDto';
 
 @Controller('door')
 export class DoorController {
@@ -31,4 +32,9 @@ export class DoorController {
   getSingleDoorsForPrintLabel() {
     return this.doorService.getSingleDoorsForPrintLabel();
   }
+
+  @Post('updateDatesSyncing')
+  updateDatesSyncing( @Body() dto: WithDatesDto) {
+    return this.doorService.updateDatesSyncing(dto);
+  } 
 }

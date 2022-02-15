@@ -151,7 +151,7 @@ export class Order implements IOrder {
     @Column({ nullable: false })
     twoDoor: string;
 
-    @Column({ nullable: false })
+    @Column({ nullable: true })
     package: string;
 
     @Column({ nullable: true })
