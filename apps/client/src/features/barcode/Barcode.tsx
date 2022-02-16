@@ -23,6 +23,7 @@ const zones = [
 export const Barcode = () => {
     const dispatch = useAppDispatch();
     const barcode = useAppSelector((state) => state.barcode);
+   
 
     return (
         <Container>

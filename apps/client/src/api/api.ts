@@ -22,10 +22,14 @@ const packagePanels = (data: string[]) => {
     return http.post("/panelout/packagePanels", data)
 }
 
+const getDoors = () => {
+    return http.get("door")
+}
 export const api = {    
     login,
     authentication,
     markDate,
     markDateWarehouse,
-    packagePanels
+    packagePanels,
+    getDoors
 }

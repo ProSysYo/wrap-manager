@@ -18,7 +18,7 @@ const initialState: BarcodeState = {
     codeOtdelochnik: "",
     packagePanel: {
         numberLabel: null,
-        panels: []
+        panels: [],
     },
 };
 
@@ -95,6 +95,14 @@ export const barcodeSlice = createSlice({
         setCodeOtdelochnik: (state, action: PayloadAction<string>) => {
             state.codeOtdelochnik = action.payload;
         },
+        rebootPartState: (state) => {
+            state.status = "idle";
+            state.simpleCode = "";
+            state.readedCodes = [];
+            state.codeOtdelochnik = "";
+            state.packagePanel.numberLabel = null;
+            state.packagePanel.panels = [];
+        }
     },
     extraReducers: (bilder) => {
         bilder

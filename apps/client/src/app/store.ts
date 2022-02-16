@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import barcodeReducer from "../features/barcode/barcodeSlice";
+import doorReducer from "../features/door/doorSlice";
 
 export const store = configureStore({
   reducer: {    
     auth: authReducer,
-    barcode: barcodeReducer 
+    barcode: barcodeReducer,
+    door: doorReducer 
   },
 });
 

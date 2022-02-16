@@ -1,4 +1,5 @@
 import { Input, List } from "antd";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { openNotification } from "../../common/notification";
@@ -8,6 +9,12 @@ import { barcodeActions, markDate } from './barcodeSlice';
 export const SimpleBarcode = () => {
     const dispatch = useAppDispatch();
     const barcode = useAppSelector((state) => state.barcode);
+
+    useEffect(() => {
+        return () => {
+            dispatch(barcodeActions.rebootPartState())
+        }
+    }, [dispatch]);
 
     const pressEnter = async () => {
         if (!barcode.field || !barcode.simpleCode) {
