@@ -3,7 +3,6 @@ import { VariableSizeGrid as Grid } from "react-window";
 import ResizeObserver from "rc-resize-observer";
 import classNames from "classnames";
 import { Table } from "antd";
-import { isArray } from "util";
 
 export function VirtualTable(props: Parameters<typeof Table>[0]) {
     const { columns, scroll } = props;
@@ -19,8 +18,7 @@ export function VirtualTable(props: Parameters<typeof Table>[0]) {
             ...column,
             width: Math.floor(tableWidth / widthColumnCount),
         };
-    });
-    console.log(mergedColumns);
+    });    
 
     const gridRef = useRef<any>();
     const [connectObject] = useState<any>(() => {

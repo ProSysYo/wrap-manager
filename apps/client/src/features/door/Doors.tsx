@@ -8,7 +8,7 @@ export const Doors = () => {
     const { door } = useAppSelector((state) => state);
     useEffect(() => {
         dispatch(getDoors());
-    }, []);
+    }, [dispatch]);
 
     const columns = [
         { title: "id", dataIndex: "id", width: 50 },
@@ -18,14 +18,16 @@ export const Doors = () => {
             title: "Код заказчика",
             width: 150,
             dataIndex: ["order", "codeCustomer"],
-            filters: [
-                { text: "D007",value: "D007" },
-                { text: "D008", value: "D008" },
-                { text: "D012", value: "D012" },
-            ],
+            filters: door.codeCustomerFilters,
             onFilter: (value: any, record: any) => record.order.codeCustomer === value,
         },
-        { title: "Имя заказчика", width: 200, dataIndex: ["order", "nameCustomer"] },        
+        {
+            title: "Имя заказчика",
+            width: 200,
+            dataIndex: ["order", "nameCustomer"],
+            filters: door.nameCustomerFilters,
+            onFilter: (value: any, record: any) => record.order.nameCustomer === value,
+        },
         { title: "Номер заказчика", width: 250, dataIndex: ["order", "numberCustomer"] },
         { title: "Партийность", width: 120, dataIndex: ["order", "party"] },
         { title: "Менеджер", width: 120, dataIndex: ["order", "manager"] },
@@ -34,7 +36,13 @@ export const Doors = () => {
         { title: "Высота", width: 100, dataIndex: ["order", "height"] },
         { title: "Ширина", width: 100, dataIndex: ["order", "width"] },
         { title: "Петли", width: 100, dataIndex: ["order", "hinge"] },
-        { title: "Осн. замок", width: 200, dataIndex: ["order", "baseLock"] },
+        {
+            title: "Осн. замок",
+            width: 200,
+            dataIndex: ["order", "baseLock"],
+            filters: door.baseLockFilters,
+            onFilter: (value: any, record: any) => record.order.baseLock === value,
+        },
         { title: "Осн. наклад.", width: 200, dataIndex: ["order", "padBaseLock"] },
         { title: "Ручка", width: 200, dataIndex: ["order", "handle"] },
         { title: "Осн. цил.", width: 200, dataIndex: ["order", "cylinderBaseLock"] },
@@ -52,19 +60,51 @@ export const Doors = () => {
         { title: "Цвет пл. внутри", width: 200, dataIndex: ["order", "colorDecorationInside"] },
         { title: "Цвет пат. внутри", width: 200, dataIndex: ["order", "patinaDecorationInside"] },
         { title: "Фрез. внутри", width: 200, dataIndex: ["order", "decorationInside"] },
-        { title: "Окно", width: 200, dataIndex: ["order", "window"] },
-        { title: "Высота окна", width: 200, dataIndex: ["order", "heightWindow"] },
-        { title: "Ширина окна", width: 200, dataIndex: ["order", "widthWindow"] },
-        { title: "Толщ. окна", width: 200, dataIndex: ["order", "thickWindow"] },
-        { title: "ччччч", width: 200, dataIndex: ["order", "ччч"] },
-        { title: "ччччч", width: 200, dataIndex: ["order", "ччччч"] },
-        { title: "ччччч", width: 200, dataIndex: ["order", "ччччч"] },
-        { title: "ччччч", width: 200, dataIndex: ["order", "ччччч"] },
+        { title: "Окно", width: 150, dataIndex: ["order", "window"] },
+        { title: "Высота окна", width: 100, dataIndex: ["order", "heightWindow"] },
+        { title: "Ширина окна", width: 100, dataIndex: ["order", "widthWindow"] },
+        { title: "Толщ. окна", width: 100, dataIndex: ["order", "thickWindow"] },
+        { title: "Цвет окна", width: 150, dataIndex: ["order", "colorWindow"] },
+        { title: "Цвет ковки", width: 150, dataIndex: ["order", "colorKovkaWindow"] },
+        { title: "Цвет патины", width: 150, dataIndex: ["order", "patinaKovkaWindow"] },
+        { title: "Уплотнитель", width: 200, dataIndex: ["order", "seal"] },
+        { title: "Уши", width: 150, dataIndex: ["order", "ear"] },
+        { title: "Доводчик", width: 100, dataIndex: ["order", "closer"] },
+        { title: "Усиление под дов.", width: 100, dataIndex: ["order", "forceCloser"] },
+        { title: "Отверстия в коробе", width: 150, dataIndex: ["order", "holeBox"] },
+        { title: "Тип петель", width: 120, dataIndex: ["order", "typeHinge"] },
+        { title: "Три петли", width: 100, dataIndex: ["order", "trioHinge"] },
+        { title: "Порог из нерж", width: 100, dataIndex: ["order", "steelDoorStep"] },
+        { title: "Задний лист", width: 100, dataIndex: ["order", "backSheet"] },
+        { title: "Наличник", width: 120, dataIndex: ["order", "frame"] },
+        { title: "Двустворчатая", width: 150, dataIndex: ["order", "twoDoor"] },
+        { title: "Упаковка", width: 120, dataIndex: ["order", "package"] },
+        { title: "Примечание", width: 400, dataIndex: ["order", "note"] },
+        { title: "Дата создания", width: 120, dataIndex: ["order", "dateCreate"] },
+        { title: "Ширина р. створ.", width: 100, dataIndex: ["order", "widthTwoDoor"] },
+        { title: "Метал короб", width: 100, dataIndex: ["order", "metalBox"] },
+        { title: "Металл полотно", width: 100, dataIndex: ["order", "metalPolotno"] },
+        { title: "Толщина полотна", width: 100, dataIndex: ["order", "thickPolotno"] },
+        { title: "Термо кабель", width: 100, dataIndex: ["order", "thermoCable"] },
+        { title: "Паспорт", width: 150, dataIndex: ["order", "passport"] },
+        { title: "Эксцентрик", width: 100, dataIndex: ["order", "eccentric"] },
+        { title: "Электромагнит", width: 100, dataIndex: ["order", "electromagnet"] },
+        { title: "Подсветка", width: 100, dataIndex: ["order", "illumination"] },
+        { title: "Левая полка", width: 150, dataIndex: ["order", "leftPolka"] },
+        { title: "Правая полка", width: 150, dataIndex: ["order", "rightPolka"] },
+        { title: "Фрамуга", width: 150, dataIndex: ["order", "framuga"] },
+        { title: "Звукоизоляция", width: 100, dataIndex: ["order", "soundInsulation"] },
+        { title: "Цвет наличника", width: 120, dataIndex: ["order", "colorFrame"] },
     ];
 
     return (
         <div>
-            <VirtualTable columns={columns} dataSource={door.doors} scroll={{ y: 750, x: "100vw" }} />
+            <VirtualTable
+                columns={columns}
+                dataSource={door.doors}
+                loading={door.status === "loading" ? true : false}
+                scroll={{ y: 750, x: "100vw" }}
+            />
         </div>
     );
 };
