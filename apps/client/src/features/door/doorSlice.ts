@@ -3,18 +3,12 @@ import { api } from "../../api/api";
 
 interface DoorState {
     doors: any[];
-    status: "idle" | "loading" | "failed";
-    codeCustomerFilters: { value: string; text: string }[];
-    nameCustomerFilters: { value: string; text: string }[];
-    baseLockFilters: { value: string; text: string }[];
+    status: "idle" | "loading" | "failed";    
 }
 
 const initialState: DoorState = {
     doors: [],
-    status: "idle",
-    codeCustomerFilters: [],
-    nameCustomerFilters: [],
-    baseLockFilters: [],
+    status: "idle",    
 };
 
 export const getDoors = createAsyncThunk("door/getDoors", async (_, thunkAPI) => {
@@ -37,25 +31,27 @@ export const doorSlice = createSlice({
             })
             .addCase(getDoors.fulfilled, (state, action) => {
                 state.doors = action.payload?.data;
-                const codeCustomers = new Set<string>();
-                const nameCustomers = new Set<string>();
-                const baseLocks = new Set<string>();
+                // const codeCustomers = new Set<string>();
+                // const nameCustomers = new Set<string>();
+                // const baseLocks = new Set<string>();
+                // const parties = new Set<string>();
 
-                action.payload!.data.forEach((el: any) => {
-                    codeCustomers.add(el.order.codeCustomer);
-                    nameCustomers.add(el.order.nameCustomer);
-                    baseLocks.add(el.order.baseLock);
-                });
+                // action.payload!.data.forEach((el: any) => {
+                //     codeCustomers.add(el.order.codeCustomer);
+                //     nameCustomers.add(el.order.nameCustomer);
+                //     baseLocks.add(el.order.baseLock);
+                //     parties.add(el.order.party);
+                // });
 
-                state.codeCustomerFilters = Array.from(codeCustomers)
-                    .sort()
-                    .map((el) => ({ value: el, text: el }));
-                state.nameCustomerFilters = Array.from(nameCustomers)
-                    .sort()
-                    .map((el) => ({ value: el, text: el }));
-                state.baseLockFilters = Array.from(baseLocks)
-                    .sort()
-                    .map((el) => ({ value: el, text: el }));
+                // state.codeCustomerFilters = Array.from(codeCustomers)
+                //     .sort()
+                //     .map((el) => ({ value: el, text: el }));
+                // state.nameCustomerFilters = Array.from(nameCustomers)
+                //     .sort()
+                //     .map((el) => ({ value: el, text: el }));
+                // state.baseLockFilters = Array.from(baseLocks)
+                //     .sort()
+                //     .map((el) => ({ value: el, text: el }));
 
                 state.status = "idle";
             })

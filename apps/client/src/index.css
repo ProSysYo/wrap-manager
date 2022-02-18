@@ -5,7 +5,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;  
 }
 
 code {
@@ -13,18 +13,10 @@ code {
     monospace;
 }
 
-.virtual-table .ant-table-container:before,
-  .virtual-table .ant-table-container:after {
-    display: none;    
-  }
-  .virtual-table-cell {    
-    font-size: 12px;
-    box-sizing: border-box;
-    padding: 3px;
-    border-bottom: 1px solid #e8e8e8;
-    background: #FFF;
-  }
-
 .ant-table {
   font-size: 12px !important;
+}
+
+.ant-table.ant-table-small .ant-table-tbody>tr>td {
+  padding: 4px 5px!important;
 }

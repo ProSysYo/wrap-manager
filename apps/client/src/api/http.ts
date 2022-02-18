@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 
 const defaultOptions = {
     baseURL: "http://localhost:3002",
+    //baseURL: "http://192.168.100.30:3002",
     headers: {
         "Content-type": "application/json",
     },
