@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getDoors } from "./doorSlice";
+import { getDoors, doorActions } from './doorSlice';
 import { Table } from "antd";
 
 export const Doors = () => {
     const dispatch = useAppDispatch();
     const { door } = useAppSelector((state) => state);
     useEffect(() => {
-        dispatch(getDoors());
+        const promise = dispatch(getDoors());
+        return () => {
+            promise.abort()
+            dispatch(doorActions.rebootDoors())
+        }
     }, [dispatch]);
 
     const columns = [
@@ -96,7 +100,7 @@ export const Doors = () => {
                 dataSource={door.doors}
                 size="small"
                 loading={door.status === "loading" ? true : false}
-                scroll={{ x: "100vw" }}
+                scroll={{ x: "100vw", y: 600 }}
                 pagination={{ pageSize: 20, pageSizeOptions: [20] }}
                 rowKey="id"
             />

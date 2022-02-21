@@ -3,19 +3,15 @@ import { openNotification } from "../../common/notification";
 import { api } from "../../api/api";
 export interface BarcodeState {
     field: string | null;
-    status: "idle" | "loading" | "failed";
-    simpleCode: string;
-    readedCodes: string[];
-    codeOtdelochnik: string;
+    status: "idle" | "loading" | "failed";    
+    readedCodes: string[];    
     packagePanel: { numberLabel: number | null; panels: any[] };
 }
 
 const initialState: BarcodeState = {
     field: null,
-    status: "idle",
-    simpleCode: "",
-    readedCodes: [],
-    codeOtdelochnik: "",
+    status: "idle",    
+    readedCodes: [],    
     packagePanel: {
         numberLabel: null,
         panels: [],
@@ -89,32 +85,21 @@ export const barcodeSlice = createSlice({
         setZone: (state, action: PayloadAction<string>) => {
             state.field = action.payload;
         },
-        setSimpleCode: (state, action: PayloadAction<string>) => {
-            state.simpleCode = action.payload;
-        },
-        setCodeOtdelochnik: (state, action: PayloadAction<string>) => {
-            state.codeOtdelochnik = action.payload;
-        },
         rebootPartState: (state) => {
-            state.status = "idle";
-            state.simpleCode = "";
-            state.readedCodes = [];
-            state.codeOtdelochnik = "";
+            state.status = "idle";            
+            state.readedCodes = [];           
             state.packagePanel.numberLabel = null;
             state.packagePanel.panels = [];
         }
     },
     extraReducers: (bilder) => {
         bilder
-            .addCase(markDate.fulfilled, (state) => {
-                state.readedCodes.push(state.simpleCode);
-                state.simpleCode = "";
+            .addCase(markDate.fulfilled, (state, action) => {
+                state.readedCodes.push(action.payload.data);                
                 state.status = "idle";
             })
-            .addCase(markDateWarehouse.fulfilled, (state) => {
-                state.readedCodes.push(state.simpleCode);
-                state.simpleCode = "";
-                state.codeOtdelochnik = "";
+            .addCase(markDateWarehouse.fulfilled, (state, action) => {
+                state.readedCodes.push(action.payload.data);
                 state.status = "idle";
             })
             .addCase(packagePanels.fulfilled, (state, action) => {

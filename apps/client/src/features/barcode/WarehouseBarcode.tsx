@@ -2,23 +2,37 @@ import { Input, List } from "antd";
 import { useRef } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { barcodeActions, markDateWarehouse } from './barcodeSlice';
+import { openNotification } from "../../common/notification";
+import { markDateWarehouse } from "./barcodeSlice";
 
 export const WarehouseBarcode = () => {
     const dispatch = useAppDispatch();
     const barcode = useAppSelector((state) => state.barcode);
-    
+
     const inputFIO = useRef<Input>(null);
-    const inputBarcode = useRef<Input>(null)
+    const inputBarcode = useRef<Input>(null);
 
     const pressEnterBarcodeField = () => {
-        inputFIO.current?.focus();             
+        inputFIO.current?.focus();
     };
 
-    const pressEnterOtdelochnikField = () => {
-        dispatch(markDateWarehouse({serial: barcode.simpleCode, codeOtdelochnik: barcode.codeOtdelochnik}))
-        inputBarcode.current?.focus();
-    }
+    const pressEnterOtdelochnikField = async () => {
+        if (!inputBarcode.current?.state.value || !inputFIO.current?.state.value) {
+            return openNotification("error", "Не хватает данных");            
+        }
+        const res = await dispatch(
+            markDateWarehouse({
+                serial: inputBarcode.current?.state.value,
+                codeOtdelochnik: inputFIO.current?.state.value,
+            })
+        ).unwrap();
+        if (res.data) {
+            inputBarcode.current?.setValue("");
+            inputFIO.current?.setValue("");
+            inputBarcode.current?.focus();
+        }
+        
+    };
 
     return (
         <>
@@ -27,8 +41,6 @@ export const WarehouseBarcode = () => {
                 size="large"
                 ref={inputBarcode}
                 autoFocus
-                value={barcode.simpleCode}
-                onChange={(e) => dispatch(barcodeActions.setSimpleCode(e.target.value))}
                 onPressEnter={pressEnterBarcodeField}
             />
 
@@ -36,9 +48,7 @@ export const WarehouseBarcode = () => {
                 placeholder="Считайте штрихкод отделочника"
                 size="large"
                 ref={inputFIO}
-                value={barcode.codeOtdelochnik}
-                onChange={(e) => dispatch(barcodeActions.setCodeOtdelochnik(e.target.value))}
-                onPressEnter={pressEnterOtdelochnikField}               
+                onPressEnter={pressEnterOtdelochnikField}
             />
 
             <span>Обработанные штрихкоды:</span>

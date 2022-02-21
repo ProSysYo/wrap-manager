@@ -87,7 +87,7 @@ export class PaneloutService {
      * @returns сообщение об успехе или ошибку с номером панели
      * @param numberOrder -строка с номерами панелей, н-р: 8552-1#8552-6
      */
-    async markDateShipment(numberOrders: string) {       
+    async markDateShipment(numberOrders: string) {
         const numbers = numberOrders.match(/\d+-\d+/g);
 
         if (!numbers) {
@@ -131,8 +131,8 @@ export class PaneloutService {
             );
         }
 
-        for(const number of numbers) {
-            const test = number.match(/\d+-\d+/)
+        for (const number of numbers) {
+            const test = number.match(/\d+-\d+/);
             if (!test) {
                 throw new HttpException(
                     { status: HttpStatus.FORBIDDEN, message: "Не валидный номер " + number },

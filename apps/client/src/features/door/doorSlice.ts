@@ -23,7 +23,11 @@ export const getDoors = createAsyncThunk("door/getDoors", async (_, thunkAPI) =>
 export const doorSlice = createSlice({
     name: "door",
     initialState,
-    reducers: {},
+    reducers: {
+        rebootDoors: (state) => {
+            state.doors = []
+        }
+    },
     extraReducers: (bilder) => {
         bilder
             .addCase(getDoors.pending, (state) => {

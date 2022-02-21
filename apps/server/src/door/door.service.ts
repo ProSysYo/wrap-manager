@@ -60,7 +60,7 @@ export class DoorService {
 
             await this.doorRepository.update(door.id, { [dto.field]: new Date() });
 
-            return true;
+            return door.serial;
         } catch (e) {
             console.log("error", e);
 
@@ -84,7 +84,7 @@ export class DoorService {
                 fioOtdelochnik: dto.codeOtdelochnik,
             });
 
-            return true;
+            return door.serial;
         } catch (e) {
             console.log("error", e);
             if (e instanceof HttpException) throw e;
