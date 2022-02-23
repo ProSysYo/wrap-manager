@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getDoors, doorActions } from './doorSlice';
 import { Table } from "antd";
+import styled from "styled-components";
 
 export const Doors = () => {
     const dispatch = useAppDispatch();
@@ -23,14 +24,14 @@ export const Doors = () => {
         { title: "Партийность", width: 50, dataIndex: ["order", "party"] },
         { title: "Менеджер", width: 60, dataIndex: ["order", "manager"] },
         { title: "Модель полотна", width: 50, dataIndex: ["order", "modelPolotno"] },
-        { title: "Дата отдано металл", width: 40, dataIndex: "dateGiveMetall" },
-        { title: "Дата отдано панель", width: 40, dataIndex: "dateGivePanel" },
-        { title: "Грязный стенд", width: 40, dataIndex: "dateMadeDirty" },
+        { title: "Отдано металл", width: 40, dataIndex: "dateGiveMetall" },
+        { title: "Отдано панель", width: 40, dataIndex: "dateGivePanel" },
+        { title: "Грязный", width: 40, dataIndex: "dateMadeDirty" },
         { title: "Покраска", width: 40, dataIndex: "dateMadePaint" },
-        { title: "Вып. Панель", width: 40, dataIndex: "dateMadePanel" },
-        { title: "Трансп. Панель", width: 40, dataIndex: "dateTransportedPanel" },
+        { title: "Панель вып.", width: 40, dataIndex: "dateMadePanel" },
+        { title: "Панель трансп.", width: 40, dataIndex: "dateTransportedPanel" },
         { title: "Отделочник", width: 50, dataIndex: "dateOtdelochnik" },
-        { title: "Чист. стенд", width: 40, dataIndex: "dateMadeClear" },
+        { title: "Чистый", width: 40, dataIndex: "dateMadeClear" },
         { title: "Упаковка", width: 40, dataIndex: "datePackaging" },
         { title: "Отгружено", width: 45, dataIndex: "dateShipment" },
         { title: "Номер заказчика", width: 150, dataIndex: ["order", "numberCustomer"] },
@@ -94,16 +95,23 @@ export const Doors = () => {
     ];
 
     return (
-        <div>
+        <Container>
             <Table
                 columns={columns}
                 dataSource={door.doors}
                 size="small"
                 loading={door.status === "loading" ? true : false}
-                scroll={{ x: "100vw", y: 600 }}
-                pagination={{ pageSize: 20, pageSizeOptions: [20] }}
+                scroll={{ x: 2000, y: 500 }}
+                pagination={{ pageSize: 15, pageSizeOptions: [15] }}
                 rowKey="id"
             />
-        </div>
+        </Container>
     );
 };
+
+const Container = styled.div`    
+    width: 100%;
+    max-width: 90vw;
+    max-height: 90vh;
+    
+`;

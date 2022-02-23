@@ -1,0 +1,23 @@
+[
+    {
+        "value": "ММ2",
+        "doorThicks": [60, 70, 80, 90],
+        "typeOutside": "М",
+        "typeInside": "М",
+        "isTermo": false, 
+        "isDouble": false, 
+        "isInside": false, 
+        "isPena": false
+    }, 
+    {
+        "value": "ММ3",
+        "doorThicks": [80, 90, 100],
+        "typeOutside": "М",
+        "typeInside": "М",
+        "isTermo": false, 
+        "isDouble": false, 
+        "isInside": false, 
+        "isPena": false
+    }
+
+]

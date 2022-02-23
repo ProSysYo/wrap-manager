@@ -23,7 +23,7 @@ export const MySider = () => {
                         <Link to="/doors">Двери</Link>
                     </Menu.Item>
                     <Menu.Item key="4" icon={<VideoCameraOutlined />}>
-                        <Link to="/outPanels">Сторонние панели</Link>
+                        <Link to="/door">заказ</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>
